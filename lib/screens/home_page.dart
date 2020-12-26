@@ -3,6 +3,7 @@ import 'package:first_project/screens/hello_page3.dart';
 import 'package:first_project/screens/listview.dart';
 import 'package:first_project/utils/navigator.dart';
 import 'package:first_project/widgets/button/main.dart';
+import 'package:first_project/widgets/drawer/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 
@@ -11,14 +12,31 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DefaultTabController(
+        length: 3,
+        child: Scaffold(
         appBar: AppBar(
           title: Text(
             'Hello Flutter',
           ),
+          bottom: TabBar(tabs: [
+            Tab(text: 'Tab1'),
+            Tab(text: 'Tab2'),
+            Tab(text: 'Tab3')
+          ],),
         ),
-        body: _body(context));
+        body: TabBarView(children: [
+          _body(context),
+          _body(context),
+          _body(context)
+        ]),
+        floatingActionButton:  FloatingActionButton(onPressed: () => _onClickFab(), child: Icon(Icons.add)),
+        drawer: DrawerList()
+    )
+    );
   }
+
+  _onClickFab() => print('Floating Button');
 
   void _onClickNavigator(BuildContext context, Widget page) async =>
       await push(context, page);
